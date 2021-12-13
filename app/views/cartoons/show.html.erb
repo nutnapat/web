@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<%= image_tag(@cartoon.image , style:'width:200px ; height:200px')%>
+<p>
+  <strong>Name:</strong>
+  <%= @cartoon.name %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @cartoon.status %>
+</p>
+
+<p>
+  <strong>Writer:</strong>
+  <%= @cartoon.writer %>
+</p>
+
+<p>
+  <strong>Shortinfo:</strong>
+  <%= @cartoon.shortinfo %>
+</p>
+
+<p>
+  <strong>Tags:</strong>
+  <%= @cartoon.tags.to_sentence %>
+</p>
+
+<p>
+  <strong>Daytoupdate:</strong>
+  <%= @cartoon.daytoupdate %>
+</p>
+
+

@@ -1,0 +1,15 @@
+<% if flash.now[:notice] %>
+	<div class="alert alert-success" role="alert">
+		<h1><%= flash.now[:notice] %></h1>
+	</div>
+<%end%>
+
+<% if flash.now[:alert] %>
+	<div class="alert alert-danger" role="alert">
+		<h1><%= flash.now[:alert] %></h1>
+	</div>
+<%end%>
+
+<script>
+	$(".alert" ).fadeOut(3000);
+</script>

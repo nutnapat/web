@@ -1,0 +1,55 @@
+<%= form_with(model: cartoon) do |form| %>
+  <% if cartoon.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(cartoon.errors.count, "error") %> prohibited this cartoon from being saved:</h2>
+
+      <ul>
+        <% cartoon.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.select :status, ["continue","complete"]%>
+  </div>
+
+  <div class="field">
+    <%= form.label :writer %>
+    <%= form.text_field :writer %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shortinfo %>
+    <%= form.text_field :shortinfo %>
+  </div>
+
+  <h5>TAGS</h5>
+  <% Cartoon::TAGS.each do |key| %>
+    
+    <%= form.check_box :tags, { multiple: true, checked: form.object.tags&.include?(key.name.to_s) }, key.name, nil %>
+    <%= form.label key.name %>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :daytoupdate %>
+    <%= form.select :daytoupdate, ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"]%>
+  </div>
+
+  <div class="field">
+    <%= form.label :image %>
+    <%= form.file_field :image %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+

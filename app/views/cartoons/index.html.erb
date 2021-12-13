@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Cartoons</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Writer</th>
+      <th>Shortinfo</th>
+      <th>Tags</th>
+      <th>Daytoupdate</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cartoons.each do |cartoon| %>
+      <tr>
+        <td><%= cartoon.name %></td>
+        <td><%= cartoon.status %></td>
+        <td><%= cartoon.writer %></td>
+        <td><%= cartoon.shortinfo %></td>
+        <td><%= cartoon.tags.to_sentence %></td>
+        <td><%= cartoon.daytoupdate %></td>
+        <td><%= link_to 'Show', cartoon %></td>
+        <td><%= link_to 'Edit', edit_cartoon_path(cartoon) %></td>
+        <td><%= link_to 'Destroy', cartoon, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Cartoon', new_cartoon_path %>

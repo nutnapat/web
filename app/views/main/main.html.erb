@@ -1,0 +1,188 @@
+<% if Current.user %>
+  <% if Current.user.mode == "admin" %>
+    <%= button_to "upload", "/admin/update/cartoon" %>
+  <%end%> 
+<%end%>
+<% if Current.user %>
+  <h1>Hello <%= Current.user.name%>!</h1>
+  <% if @folltoon==[] %>
+    <h1>Let's follow cartoons!</h1>
+  <%else%>
+    <h1>Your Follow List</h1>
+  <%end%>
+  <br>
+  <div class="row justify-content-center">
+    <% @folltoon.each do |cartoon| %>
+      <div class="card m-3">
+        <%  if cartoon.image.attached? %>
+        <%= image_tag(cartoon.image, class:"card-img-top",style:'width:100% , height:200px , overflow-y:hidden')%>
+        <%else%>
+        <%= image_tag("logo.png",class:"card-img-top",style:'width:100% , height:200px , overflow-y:hidden') %>
+        <%end%>
+        <h4><b><%= link_to "#{cartoon.name}","/#{cartoon.name}" %></b></h4>
+        <p><%= cartoon.tags %></p>
+        <p><%= cartoon.shortinfo %></p> 
+      </div>
+    <% end %>
+  </div>
+<%end%>
+<br>
+<h1>POPULAR</h1>
+<br>
+<div class="row justify-content-center">
+  <% @popular.each do |cartoon| %>
+  <div class="card m-3">
+    <%  if cartoon.image.attached? %>
+        <%= image_tag(cartoon.image, class:"card-img-top",style:'width:100% , height:200px , overflow-y:hidden')%>
+        <%else%>
+        <%= image_tag("logo.png",class:"card-img-top",style:'width:100% , height:200px , overflow-y:hidden') %>
+        <%end%>
+    <h4><b><%= link_to "#{cartoon.name}","/#{cartoon.name}" %></b></h4>
+    <p><%= cartoon.tags %></p>
+    <p><%= cartoon.shortinfo %></p> 
+  </div>
+  <% end %>
+</div>
+
+<br>
+<h1>DAILY CARTOON</h1>
+<br>
+<div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic example">
+  <% Cartoon::DAY.each do |d| %>
+    <a class="btn  <%=d%>" href="/main?q=<%=d%>" ><%=d%></a>
+  <%end%>
+  <a class="btn btn-outline-primary" href="/main" >all</a>
+</div>
+<br>
+<div class="row justify-content-center">
+  <% @daytoons.each do |cartoon| %>
+  <div class="card m-3">
+    <%  if cartoon.image.attached? %>
+        <%= image_tag(cartoon.image, class:"card-img-top",style:'width:100% , height:200px , overflow-y:hidden')%>
+        <%else%>
+        <%= image_tag("logo.png",class:"card-img-top",style:'width:100% , height:200px , overflow-y:hidden') %>
+        <%end%>
+    <h4><b><%= link_to "#{cartoon.name}","/#{cartoon.name}" %></b></h4>
+    <p><%= cartoon.tags %></p>
+    <p><%= cartoon.shortinfo %></p> 
+  </div>
+  <% end %>
+</div>
+
+<br>
+<h1>ALL UPDATE</h1>
+<br>
+<table id="chaptertable" class="display" style="width:100%">
+  <thead>
+    <tr>
+      <th>Cartoon name</th>
+      <th>chapter</th>
+      <th>update</th>
+      <th>comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @chapters.each do |chapter| %>
+      <tr>
+        <td><%= chapter.cartoon.name %></td>
+        <td><%= link_to "#{chapter.num}","/#{chapter.cartoon.name}/#{chapter.num}" %></td>
+        <td><%= time_ago_in_words(chapter.created_at) %></td>
+        <td><%= chapter.comments.count %></td>
+      </tr>
+    <%end%>
+  </tbody>
+</table>
+
+<script>
+  $(document).ready(function() {
+    $('#chaptertable').DataTable( {
+        "bSort": false,
+    } );
+} );
+</script>
+
+<style>
+h1 {text-align: center;}
+p {text-align: center;}
+
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 200px;
+  higth: 200px;
+  text-align: center;
+}
+
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
+.sunday {
+  border: 2px solid #f44336;
+  background-color: white; 
+  color: black;
+}
+.sunday:hover {
+  background-color: #f44336;
+  color: white;
+}
+.monday {
+  border: 2px solid #FFD700;
+  background-color: white; 
+  color: black;
+}
+.monday:hover {
+  background-color: #FFD700;
+  color: white;
+}
+.tuesday {
+  border: 2px solid #FF69B4;
+  background-color: white; 
+  color: black;
+}
+.tuesday:hover {
+  background-color: #FF69B4;
+  color: white;
+}
+.wednesday {
+  border: 2px solid #4CAF50;
+  background-color: white; 
+  color: black;
+}
+.wednesday:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+.thursday {
+  border: 2px solid #ff7f50;
+  background-color: white; 
+  color: black;
+}
+.thursday:hover {
+  background-color: #FF7F50;
+  color: white;
+}
+.friday {
+  border: 2px solid #008CBA;
+  background-color: white; 
+  color: black;
+}
+.friday:hover {
+  background-color: #008CBA;
+  color: white;
+}
+.saturday {
+  border: 2px solid #9370DB;
+  background-color: white; 
+  color: black;
+}
+.saturday:hover {
+  background-color: #9370DB;
+  color: white;
+}
+</style>

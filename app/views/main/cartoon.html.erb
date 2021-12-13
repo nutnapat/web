@@ -1,0 +1,67 @@
+<div style="display:inline-block;vertical-align:top;">
+   <p style="float: left;">
+   	<%  if @cartoon.image.attached? %>
+   	<%= image_tag(@cartoon.image,style:'width:auto ; height:400px') %>
+   	<%else%>
+   	<%= image_tag("logo.png",style:'width:auto ; height:400px') %>
+   	<%end%>
+   </p>
+</div>
+<div style="display:inline-block;">
+    <div class="py-4 px-5 ">
+		<h1 style="text-align:center"><%=@cartoon.name%></h1>
+		<hr>
+		<div class="d-flex">
+			<h4>short info :</h4>
+			<h4><%=@cartoon.shortinfo%></h4>
+		</div>
+		<div class="d-flex">
+			<h4>writter :</h4>
+			<h4><%=@cartoon.writer%></h4>
+		</div>
+		<div class="d-flex">
+			<h4>genre :</h4>
+			<h4><%=@cartoon.tags%></h4>
+		</div>
+		<div class="d-flex">
+			<h4>status :</h4>
+			<h4><%=@cartoon.status%></h4>
+		</div>
+		<div class="d-flex">
+			<h4>follower :</h4>
+			<h4><%=@cartoon.users.count%></h4>
+		</div>
+         <% if Current.user %>
+		 	<% if Current.user.cartoons.include?(@cartoon) %>
+	    		<h5><%= button_to "Unfollow", unfollow_cartoon_path, method: "POST" %></h5>
+			<% else %>
+	    		<h5><%= button_to "Follow", follow_cartoon_path, method: "POST"  %></h5>
+			<% end%>
+		<%end%>
+	</div>
+</div>
+<div class="card">
+	<h4>Chapter</h4>
+	<% @chapters.each do |chapter| %>
+		<div class="d-flex bd-highlight">
+			<div class="p-2 flex-grow-1 bd-highlight">
+			<div style="display:inline-block;vertical-align:top;">
+   				<p style="float: left;">
+   					<%  if chapter.images.attached? %>
+   					<%= image_tag(chapter.images.first,style:'width:20px ; height:20px') %>
+   					<%else%>
+   					<%= image_tag("logo.png",style:'width:20px ; height:20px') %>
+   					<%end%>
+   						
+   					</p>
+			</div>
+			</div>
+			<div class="p-2 flex-grow-1 bd-highlight">
+				<p><%= link_to "#{chapter.num}","/#{@cartoon.name}/#{chapter.num}" %></p>
+			</div>
+			<div class="p-2 bd-highlight"><%=time_ago_in_words(chapter.created_at)%></div> 
+			<div class="p-2 bd-highlight">comment:<%=chapter.comments.count%></div>
+		</div>
+	<% end %>
+</div>
+

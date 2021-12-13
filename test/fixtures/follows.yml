@@ -1,0 +1,14 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cartoon: one
+  user: one
+
+two:
+  cartoon: two
+  user: one
+
+three:
+  cartoon: three
+  user: one
+

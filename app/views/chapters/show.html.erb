@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Num:</strong>
+  <%= @chapter.num %>
+</p>
+
+<p>
+  <strong>Cartoon:</strong>
+  <%= @chapter.cartoon.name %>
+</p>
+
+<% @chapter.images.each do |image| %>
+  <%= image_tag(image,style: 'height: 200px; width: 200px; display: block;' ) %>
+<% end %>
+
+

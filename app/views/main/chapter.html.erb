@@ -1,0 +1,78 @@
+<style>
+	div.head {
+  		text-align: center;
+	}
+
+</style>
+
+<div class="head">
+	<h1><%= @cartoon.name %> chapter <%= @chapter.num %> </h1>
+</div>
+<% if @chapter.images.attached? %>
+<% @chapter.images.each do |image| %>
+	<div class="d-flex justify-content-center">
+		<%= image_tag(image,style:'width:400px ; height:400px') %>	
+	</div>
+<% end %>
+<%else%>
+<div class="d-flex justify-content-center">
+		<%= image_tag("logo.png",style:'width:400px ; height:400px') %>	
+</div>
+<%end%>
+<div class="d-flex justify-content-around">
+	<% if @chapter.num != 1%>
+		<div class="p-2  bd-highlight">
+			<%= link_to "last page", "/#{@cartoon.name}/#{@chapter.num-1}" %>
+		</div>
+	<% else%>
+		<div class="p-2  bd-highlight"></div>
+	<%end%>
+	<div class="dropdown ">
+  		<button aria-expanded="false" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" id="dropdownMenuButton1" type="button">chapter</button>
+  		<ul aria-labelledby="dropdownMenuButton1" class="dropdown-menu">
+	    	<% @cartoon.chapters.each do |chapter| %>
+	    		<li>
+	      			<a class="dropdown-item" href="/<%=@cartoon.name%>/<%=chapter.num%>"><%=chapter.num%></a>
+	    		</li>
+	    	<%end%>
+  		</ul>
+	</div>
+	<% if @chapter.num != @cartoon.chapters.count %>
+		<div class="p-2  bd-highlight">
+			<%= link_to "next page", "/#{@cartoon.name}/#{@chapter.num+1}" %>
+		</div>
+	<% else%>
+		<div class="p-2  bd-highlight"></div>
+	<%end%>
+</div>
+<div class="card">
+	<h4>Comment</h4>
+	<% if Current.user %>
+		<%= form_with model: @comment do |f| %>
+			<%= f.text_field :body , placeholder:"comment"%>
+			<%= hidden_field_tag(:name, @cartoon.name) %>
+			<%= hidden_field_tag(:num, @chapter.num) %>
+			<%= f.button  :comment %>
+			
+		<%end%>
+	<%end%>
+	<% @comments.each do |comment| %>
+		<div class="d-flex bd-highlight">
+			<div class="p-2 bd-highlight">
+			<div style="display:inline-block;vertical-align:top;">
+   				<p style="float: left;">
+   					<% if comment.user.image.attached?%>
+   					<%= image_tag(comment.user.image,style:'width:20px ; height:20px') %>
+   					<%else%>
+   					<%= image_tag("logo.png",style:'width:20px ; height:20px') %>
+   					<%end%>
+   					</p>
+			</div>
+			</div>
+			<div class="p-2 flex-grow-1 bd-highlight"><%=comment.user.name%></div>
+			<div class="p-2 flex-grow-1 bd-highlight"><%=comment.body%></div>
+			<div class="p-2 bd-highlight"><%=time_ago_in_words(comment.created_at)%></div> 
+		</div>
+		<hr>
+	<%end%>
+</div>

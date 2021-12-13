@@ -1,0 +1,38 @@
+<h1>Sign Up</h1>
+
+<%= form_with model: @user, url: sign_up_path ,local:true do |form| %>
+  <% if @user.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(@user.errors.count, "error") %> for sign up!</h2>
+      <% @user.errors.each do |error| %>
+        <div><%= error.full_message %></div>
+      <% end %>
+    </div>
+  <% end %>
+
+
+  <div class="mb-3">
+    <%= form.label :email %>
+    <%= form.text_field :email ,class:"form-control" , placeholder:"nut@lnwza.com" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :name %>
+    <%= form.text_field :name ,class:"form-control" , placeholder:"nut lnwza" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :password %>
+    <%= form.password_field :password ,class:"form-control" , placeholder:"password" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation, class:"form-control" , placeholder:"password" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :image %>
+    <%= form.file_field :image %>
+  </div>
+  <div class="mb-3">
+    <%= form.submit "Sign Up" , class:"btn btn-primary" %>
+  </div>
+<% end %>
+
